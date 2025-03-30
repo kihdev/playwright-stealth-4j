@@ -5,6 +5,7 @@ import com.vanniktech.maven.publish.JavadocJar
 plugins {
     kotlin("jvm") version "2.1.20"
     id("com.vanniktech.maven.publish") version "0.31.0"
+    id("signing")
 }
 
 group = "io.github.kihdev.playwright-stealth-4j"
