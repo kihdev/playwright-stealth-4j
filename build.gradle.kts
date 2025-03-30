@@ -1,10 +1,21 @@
+import com.vanniktech.maven.publish.SonatypeHost
+import com.vanniktech.maven.publish.JavaLibrary
+import com.vanniktech.maven.publish.JavadocJar
+
 plugins {
-    kotlin("jvm") version "2.1.10"
-    `maven-publish`
+    kotlin("jvm") version "2.1.20"
+    id("com.vanniktech.maven.publish") version "0.31.0"
 }
 
 group = "io.github.kihdev.playwright-stealth-4j"
 version = "1.0-SNAPSHOT"
+
+object Meta {
+    const val NAME = "playwright-stealth-4j"
+    const val DESC = "A Kotlin-based library to enhance Playwright's stealth capabilities for Java, Kotlin, and Groovy."
+    const val LICENSE = "MIT"
+    const val GITHUB_REPO = "kihdev/playwright-stealth-4j"
+}
 
 java {
     sourceCompatibility = JavaVersion.VERSION_21
@@ -12,12 +23,15 @@ java {
 }
 
 repositories {
+    mavenLocal()
     mavenCentral()
 }
 
 dependencies {
     implementation("com.microsoft.playwright:playwright:1.50.0")
+
     testImplementation(kotlin("test"))
+    testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
 }
 
 tasks.test {
@@ -27,76 +41,44 @@ kotlin {
     jvmToolchain(21)
 }
 
-publishing {
-    publications {
-        create<MavenPublication>("mavenJava") {
-            from(components["java"])
+mavenPublishing {
+    configure(JavaLibrary(
+        javadocJar = JavadocJar.Javadoc(),
+        sourcesJar = true,
+    ))
 
-            pom {
-                name.set("playwright-stealth-4j")
-                description.set("Playwright-Stealth for JVM – A Kotlin-based library to enhance Playwright's stealth capabilities for Java, Kotlin, and Groovy.")
-                url.set("https://github.com/kihdev/playwright-stealth-4j")
+    publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL, automaticRelease = true)
+    signAllPublications()
 
-                licenses {
-                    license {
-                        name.set("MIT License")
-                        url.set("https://opensource.org/licenses/MIT")
-                        distribution.set("repo")
-                    }
-                }
+    coordinates(group.toString(), Meta.NAME, version.toString())
 
-                scm {
-                    connection.set("scm:git:https://github.com/kihdev/playwright-stealth-4j.git")
-                    developerConnection.set("scm:git:ssh://git@github.com:kihdev/playwright-stealth-4j.git")
-                    url.set("https://github.com/kihdev/playwright-stealth-4j")
-                }
-
-                developers {
-                    developer {
-                        id.set("fabriziofortino")
-                        name.set("Fabrizio Fortino")
-                    }
-                }
+    pom {
+        name.set(Meta.NAME)
+        description.set(Meta.DESC)
+        inceptionYear.set("2025")
+        url.set("https://github.com/${Meta.GITHUB_REPO}")
+        licenses {
+            license {
+                name.set("MIT License")
+                url.set("https://opensource.org/licenses/MIT")
+                distribution.set("https://opensource.org/licenses/MIT")
             }
+        }
+        organization {
+            name = "Keep it https Dev"
+            url = "https://fabriziofortino.github.io/"
+        }
+        developers {
+            developer {
+                id.set("fabriziofortino")
+                name.set("Fabrizio Fortino")
+                url.set("https://github.com/fabriziofortino/")
+            }
+        }
+        scm {
+            url.set("https://github.com/${Meta.GITHUB_REPO}")
+            connection.set("scm:git:git://github.com/${Meta.GITHUB_REPO}.git")
+            developerConnection.set("scm:git:ssh://git@github.com/${Meta.GITHUB_REPO}.git")
         }
     }
-
-    repositories {
-        maven {
-            name = "OSSRH"
-            url = uri("https://oss.sonatype.org/service/local/staging/deploy/maven2/")
-            credentials {
-                username = System.getenv("MAVEN_USERNAME")
-                password = System.getenv("MAVEN_PASSWORD")
-            }
-        }
-        maven {
-            name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/kihdev/playwright-stealth-4j")
-            credentials {
-                username = System.getenv("GITHUB_ACTOR")
-                password = System.getenv("GITHUB_TOKEN")
-            }
-        }
-    }
-}
-
-tasks.withType<Javadoc> {
-    (options as StandardJavadocDocletOptions).addBooleanOption("Xdoclint:none", true)
-    options.encoding = "UTF-8"
-}
-
-tasks.register<Jar>("sourcesJar") {
-    from(sourceSets.main.get().allSource)
-    archiveClassifier.set("sources")
-}
-
-tasks.register<Jar>("javadocJar") {
-    from(tasks.javadoc)
-    archiveClassifier.set("javadoc")
-}
-
-artifacts {
-    archives(tasks.named("sourcesJar"))
-    archives(tasks.named("javadocJar"))
 }
