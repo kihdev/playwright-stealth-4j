@@ -8,7 +8,7 @@ plugins {
 }
 
 group = "io.github.kihdev.playwright-stealth-4j"
-version = "1.0-SNAPSHOT"
+version = "1.0.0"
 
 object Meta {
     const val NAME = "playwright-stealth-4j"
