@@ -36,7 +36,7 @@ jobs:
       run: ./gradlew build
 
     - name: Publish to GitHub Packages
-      run: ./gradlew publishAndReleaseToMavenCentral --no-configuration-cache
+      run: ./gradlew publishAndReleaseToMavenCentral --no-configuration-cache --debug --stacktrace
       env:
           ORG_GRADLE_PROJECT_mavenCentralUsername: ${{ secrets.ORG_GRADLE_PROJECT_mavenCentralUsername }}
           ORG_GRADLE_PROJECT_mavenCentralPassword: ${{ secrets.ORG_GRADLE_PROJECT_mavenCentralPassword }}
