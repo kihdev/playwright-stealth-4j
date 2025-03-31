@@ -8,7 +8,7 @@ plugins {
     id("signing")
 }
 
-group = "io.github.kihdev.playwright-stealth-4j"
+group = "io.github.kihdev"
 version = "1.0.0"
 
 object Meta {
