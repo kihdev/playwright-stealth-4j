@@ -11,6 +11,7 @@ plugins {
 group = "io.github.kihdev"
 version = "1.0.1-SNAPSHOT"
 
+val playwrightVersion = "1.51.0"
 object Meta {
     const val NAME = "playwright-stealth-4j"
     const val DESC = "A Kotlin-based library to enhance Playwright's stealth capabilities for Java, Kotlin, and Groovy."
@@ -29,8 +30,9 @@ repositories {
 }
 
 dependencies {
-    implementation("com.microsoft.playwright:playwright:1.50.0")
+    compileOnly("com.microsoft.playwright:playwright:$playwrightVersion")
 
+    testImplementation("com.microsoft.playwright:playwright:$playwrightVersion")
     testImplementation(kotlin("test"))
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
 }

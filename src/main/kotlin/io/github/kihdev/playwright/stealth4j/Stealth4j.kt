@@ -9,6 +9,15 @@ import com.microsoft.playwright.Page
  */
 object Stealth4j {
 
+    // Ensure that Playwright is available
+    init {
+        try {
+            Class.forName("com.microsoft.playwright.Playwright")
+        } catch (e: ClassNotFoundException) {
+            throw IllegalStateException("Playwright is not found. Please add 'com.microsoft.playwright:playwright' as a dependency in your project.")
+        }
+    }
+
     /**
      * Creates a new stealth BrowserContext with the specified configuration.
      *
