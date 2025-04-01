@@ -18,12 +18,12 @@ class Stealth4jConfig private constructor(
 
     companion object {
         /**
-         * Default configuration for Stealth4j.
+         * Default configuration for Stealth4jConfig.
          */
         val DEFAULT = builder().build()
 
         /**
-         * Creates a new Builder instance for configuring Stealth4j.
+         * Creates a new Builder instance for configuring Stealth4jConfig.
          *
          * @return A new Builder instance.
          */
