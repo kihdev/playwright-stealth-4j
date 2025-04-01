@@ -1,6 +1,5 @@
 package io.github.kihdev.playwright.stealth4j
 
-import io.github.kihdev.playwright.stealth4j.Stealth4j.stealth
 import com.microsoft.playwright.Page
 import com.microsoft.playwright.Playwright
 import org.junit.jupiter.api.Test
