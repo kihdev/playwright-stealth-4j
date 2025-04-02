@@ -1,7 +1,6 @@
 package io.github.kihdev.playwright.stealth4j
 
-import java.nio.file.Path
-import java.nio.file.Paths
+import java.net.URL
 
 /**
  * Configuration class for Stealth4j, which holds the settings for various evasions.
@@ -256,36 +255,36 @@ sealed class Script {
 /**
  * Data class representing a JavaScript script.
  *
- * @property path The path to the script file.
+ * @property url The URL of the script.
  */
-data class JsScript(val path: Path): Script() {
-    override val content: String by lazy { path.toFile().readText() }
+data class JsScript(val url: URL): Script() {
+    override val content: String by lazy { url.readText(Charsets.UTF_8) }
 
     companion object {
-        private fun getResourcePath(resourceName: String): Path {
-            val resource = {}.javaClass.classLoader.getResource(resourceName)
+        private fun getResourceURL(resourceName: String): URL {
+            val path = if (resourceName.startsWith("/")) resourceName else "/$resourceName"
+            return Companion::class.java.getResource(path)
                 ?: throw IllegalArgumentException("Resource not found: $resourceName")
-            return Paths.get(resource.toURI())
         }
 
-        val CHROME_APP = JsScript(getResourcePath("js/chrome.app.js"))
-        val CHROME_CSI = JsScript(getResourcePath("js/chrome.csi.js"))
-        val CHROME_LOAD_TIMES = JsScript(getResourcePath("js/chrome.loadTimes.js"))
-        val CHROME_RUNTIME = JsScript(getResourcePath("js/chrome.runtime.js"))
-        val IFRAME_CONTENT_WINDOW = JsScript(getResourcePath("js/iframe.contentWindow.js"))
-        val MEDIA_CODECS = JsScript(getResourcePath("js/media.codecs.js"))
-        val NAVIGATOR_HARDWARE_CONCURRENCY = JsScript(getResourcePath("js/navigator.hardwareConcurrency.js"))
-        val NAVIGATOR_LANGUAGES = JsScript(getResourcePath("js/navigator.languages.js"))
-        val NAVIGATOR_PERMISSIONS = JsScript(getResourcePath("js/navigator.permissions.js"))
-        val NAVIGATOR_PLUGINS = JsScript(getResourcePath("js/navigator.plugins.js"))
-        val NAVIGATOR_USER_AGENT = JsScript(getResourcePath("js/navigator.userAgent.js"))
-        val NAVIGATOR_VENDOR = JsScript(getResourcePath("js/navigator.vendor.js"))
-        val NAVIGATOR_WEBDRIVER = JsScript(getResourcePath("js/navigator.webdriver.js"))
-        val WEBGL_VENDOR = JsScript(getResourcePath("js/webgl.vendor.js"))
-        val WINDOW_OUTER_DIMENSIONS = JsScript(getResourcePath("js/window.outerdimensions.js"))
+        val CHROME_APP = JsScript(getResourceURL("js/chrome.app.js"))
+        val CHROME_CSI = JsScript(getResourceURL("js/chrome.csi.js"))
+        val CHROME_LOAD_TIMES = JsScript(getResourceURL("js/chrome.loadTimes.js"))
+        val CHROME_RUNTIME = JsScript(getResourceURL("js/chrome.runtime.js"))
+        val IFRAME_CONTENT_WINDOW = JsScript(getResourceURL("js/iframe.contentWindow.js"))
+        val MEDIA_CODECS = JsScript(getResourceURL("js/media.codecs.js"))
+        val NAVIGATOR_HARDWARE_CONCURRENCY = JsScript(getResourceURL("js/navigator.hardwareConcurrency.js"))
+        val NAVIGATOR_LANGUAGES = JsScript(getResourceURL("js/navigator.languages.js"))
+        val NAVIGATOR_PERMISSIONS = JsScript(getResourceURL("js/navigator.permissions.js"))
+        val NAVIGATOR_PLUGINS = JsScript(getResourceURL("js/navigator.plugins.js"))
+        val NAVIGATOR_USER_AGENT = JsScript(getResourceURL("js/navigator.userAgent.js"))
+        val NAVIGATOR_VENDOR = JsScript(getResourceURL("js/navigator.vendor.js"))
+        val NAVIGATOR_WEBDRIVER = JsScript(getResourceURL("js/navigator.webdriver.js"))
+        val WEBGL_VENDOR = JsScript(getResourceURL("js/webgl.vendor.js"))
+        val WINDOW_OUTER_DIMENSIONS = JsScript(getResourceURL("js/window.outerdimensions.js"))
 
-        val GENERATE_MAGIC_ARRAYS = JsScript(getResourcePath("js/generate.magic.arrays.js"))
-        val UTILS = JsScript(getResourcePath("js/utils.js"))
+        val GENERATE_MAGIC_ARRAYS = JsScript(getResourceURL("js/generate.magic.arrays.js"))
+        val UTILS = JsScript(getResourceURL("js/utils.js"))
     }
 }
 
