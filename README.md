@@ -1,4 +1,6 @@
-# Playwright-Stealth for JVM
+<h1 align="center">
+    <img src="assets/logo.png" alt="Playwright-Stealth for JVM" width="620"/>
+</h1>
 
 ![Build Status](https://github.com/kihdev/playwright-stealth-4j/actions/workflows/gradle-publish.yml/badge.svg)
 ![Maven Central](https://img.shields.io/maven-central/v/io.github.kihdev/playwright-stealth-4j)
