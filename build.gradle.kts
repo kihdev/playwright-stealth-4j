@@ -9,7 +9,7 @@ plugins {
 }
 
 group = "io.github.kihdev"
-version = "1.1.1"
+version = "1.1.2-SNAPSHOT"
 
 val playwrightVersion = "1.51.0"
 object Meta {
