@@ -22,7 +22,7 @@ Add the dependency to your `build.gradle.kts`:
 
 ```kotlin
 dependencies {
-    implementation("io.github.kihdev:playwright-stealth-4j:1.0.0")
+    implementation("io.github.kihdev:playwright-stealth-4j:1.1.1")
 }
 ```
 
