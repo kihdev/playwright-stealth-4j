@@ -85,15 +85,11 @@ public static void main(String[] args) {
 }
 ```
 
-## Test results
-
-With playwright-stealth-4j, screenshot of https://bot.sannysoft.com/ will look like this:
-
-![Screenshot](assets/stealth.png)
-
-Without playwright-stealth-4j, screenshot of https://bot.sannysoft.com/ will look like this:
-
-![Screenshot](assets/plain.png)
+## Test Results
+From [bot.sannysoft.com](https://bot.sannysoft.com/)
+|   Headless   | With stealth |
+|--------------|--------------|
+| ![Headless](./assets/plain.png) | ![With stealth](./assets/stealth.png) |
 
 ## Contributing
 
