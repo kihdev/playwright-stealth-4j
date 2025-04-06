@@ -22,6 +22,17 @@ class AntibotPage (private val name: String, private val page: Page) {
 
     companion object {
         val json = Json { ignoreUnknownKeys = true }
+
+        val iframeScript = """
+            async () => {
+                const iframe = document.createElement('iframe');
+                iframe.srcdoc = 'blank page';
+                document.body.appendChild(iframe);
+                const contentWindow = iframe.contentWindow instanceof Window;
+                iframe.remove();
+                return contentWindow;
+            }
+        """.trimIndent()
     }
 
     init {
@@ -29,6 +40,8 @@ class AntibotPage (private val name: String, private val page: Page) {
     }
 
     val info by lazy { json.decodeFromString<FpCollectInfo>(page.locator("pre#fp").textContent()) }
+
+    fun iframeContentWindow() = page.evaluate(iframeScript) as Boolean
 
     fun screenshot() {
         page.screenshot(
@@ -43,7 +56,7 @@ class AntibotPage (private val name: String, private val page: Page) {
 @Serializable
 data class FpCollectInfo(
     val hasChrome: Boolean,
-    @Serializable(with = DetailChromeSerializer::class) val detailChrome: DetailChrome,
+    @Serializable(with = DetailChromeSerializer::class) val detailChrome: DetailChrome
 )
 
 @Serializable

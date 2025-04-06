@@ -3,6 +3,7 @@ package io.github.kihdev.playwright.stealth4j
 import com.microsoft.playwright.BrowserContext
 import com.microsoft.playwright.Playwright
 import org.junit.jupiter.api.AfterAll
+import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
@@ -15,8 +16,15 @@ class EvasionTest {
         val context: BrowserContext = browser.newContext()
 
         @JvmStatic
-        @AfterAll
+        @BeforeAll
         fun setup() {
+            context.onConsoleMessage { msg -> println(msg.text()) }
+            context.onWebError { error -> println("Web error: ${error.error()}") }
+        }
+
+        @JvmStatic
+        @AfterAll
+        fun shutdown() {
             context.close()
             browser.close()
             playwright.close()
@@ -29,6 +37,7 @@ class EvasionTest {
         page.screenshot()
         assertFalse(page.info.hasChrome)
         assertTrue(page.info.detailChrome is DetailChrome.Unknown)
+        assertFalse(page.iframeContentWindow())
     }
 
     @Test
@@ -80,5 +89,17 @@ class EvasionTest {
         stealthPage.screenshot()
         assertTrue(stealthPage.info.detailChrome is DetailChrome.Details &&
                 (stealthPage.info.detailChrome as DetailChrome.Details).value["runtime"] == "function Object() { [native code] }")
+    }
+
+    @Test
+    fun iframeContentWindow() {
+        val stealthPage = AntibotPage("iframe.contentWindow", context.newPage().stealth(
+            Stealth4jConfig.builder()
+                .disableAll()
+                .iframeContentWindow(true)
+                .build()
+        ))
+        stealthPage.screenshot()
+        assertTrue(stealthPage.iframeContentWindow())
     }
 }
