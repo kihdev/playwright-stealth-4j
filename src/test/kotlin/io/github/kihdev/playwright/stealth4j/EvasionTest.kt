@@ -68,4 +68,17 @@ class EvasionTest {
         assertTrue(stealthPage.info.detailChrome is DetailChrome.Details &&
                 (stealthPage.info.detailChrome as DetailChrome.Details).value["loadTimes"] == "function Function() { [native code] }")
     }
+
+    @Test
+    fun chromeRuntime() {
+        val stealthPage = AntibotPage("chrome.runtime", context.newPage().stealth(
+            Stealth4jConfig.builder()
+                .disableAll()
+                .chromeRuntime(true)
+                .build()
+        ))
+        stealthPage.screenshot()
+        assertTrue(stealthPage.info.detailChrome is DetailChrome.Details &&
+                (stealthPage.info.detailChrome as DetailChrome.Details).value["runtime"] == "function Object() { [native code] }")
+    }
 }
