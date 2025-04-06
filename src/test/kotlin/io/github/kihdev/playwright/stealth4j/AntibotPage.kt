@@ -54,15 +54,15 @@ sealed class DetailChrome {
 }
 
 object DetailChromeSerializer : JsonContentPolymorphicSerializer<DetailChrome>(DetailChrome::class) {
-    override fun selectDeserializer(element: JsonElement): DeserializationStrategy<out DetailChrome> {
+    override fun selectDeserializer(element: JsonElement): DeserializationStrategy<DetailChrome> {
         return when (element) {
-            is JsonPrimitive -> StrAsString
-            is JsonObject -> MapAsMap
+            is JsonPrimitive -> UnknownSerializer
+            is JsonObject -> DetailsSerializer
             else -> throw SerializationException("Unsupported type for StringOrMap")
         }
     }
 
-    private val StrAsString = object : KSerializer<DetailChrome.Unknown> {
+    private val UnknownSerializer = object : KSerializer<DetailChrome.Unknown> {
         override val descriptor = PrimitiveSerialDescriptor("String", PrimitiveKind.STRING)
         override fun deserialize(decoder: Decoder): DetailChrome.Unknown {
             val value = decoder.decodeString()
@@ -74,7 +74,7 @@ object DetailChromeSerializer : JsonContentPolymorphicSerializer<DetailChrome>(D
         }
     }
 
-    private val MapAsMap = object : KSerializer<DetailChrome.Details> {
+    private val DetailsSerializer = object : KSerializer<DetailChrome.Details> {
         private val delegate = MapSerializer(String.serializer(), String.serializer())
 
         override val descriptor = delegate.descriptor
