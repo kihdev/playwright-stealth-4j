@@ -30,6 +30,7 @@ class Stealth4jConfig private constructor(
         fun builder() = Builder()
 
         fun mapToJson(map: Map<String, Any?>): String {
+            @Suppress("UNCHECKED_CAST")
             fun valueToJson(value: Any?): String = when (value) {
                 is String -> "\"$value\""
                 is Number, is Boolean -> value.toString()
