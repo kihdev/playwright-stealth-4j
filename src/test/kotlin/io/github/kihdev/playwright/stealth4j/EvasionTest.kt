@@ -44,6 +44,7 @@ class EvasionTest {
         assertNotEquals(4, page.navigatorHardwareConcurrency())
         assertEquals(listOf("en-US"), page.info.languages)
         assertEquals("denied", page.info.permissions["permission"])
+        assert(page.info.plugins.isEmpty())
     }
 
     @Test
@@ -155,5 +156,17 @@ class EvasionTest {
         ))
         stealthPage.screenshot()
         assertEquals("default", stealthPage.info.permissions["permission"])
+    }
+
+    @Test
+    fun navigatorPlugins() {
+        val stealthPage = AntibotPage("navigator.plugins", context.newPage().stealth(
+            Stealth4jConfig.builder()
+                .disableAll()
+                .navigatorPlugins(true)
+                .build()
+        ))
+        stealthPage.screenshot()
+        assertTrue(stealthPage.info.plugins.isNotEmpty())
     }
 }
