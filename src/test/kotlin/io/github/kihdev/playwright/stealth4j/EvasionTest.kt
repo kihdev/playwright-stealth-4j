@@ -5,7 +5,9 @@ import com.microsoft.playwright.Playwright
 import org.junit.jupiter.api.AfterAll
 import org.junit.jupiter.api.BeforeAll
 import org.junit.jupiter.api.Test
+import kotlin.test.assertEquals
 import kotlin.test.assertFalse
+import kotlin.test.assertNotEquals
 import kotlin.test.assertTrue
 
 class EvasionTest {
@@ -39,6 +41,7 @@ class EvasionTest {
         assertTrue(page.info.detailChrome is DetailChrome.Unknown)
         assertFalse(page.iframeContentWindow())
         assertTrue(page.info.audioCodecs.values.contains(""))
+        assertNotEquals(4, page.navigatorHardwareConcurrency())
     }
 
     @Test
@@ -114,5 +117,17 @@ class EvasionTest {
         ))
         stealthPage.screenshot()
         assertFalse(stealthPage.info.audioCodecs.values.contains(""))
+    }
+
+    @Test
+    fun navigatorHardwareConcurrency() {
+        val stealthPage = AntibotPage("navigator.hardwareConcurrency", context.newPage().stealth(
+            Stealth4jConfig.builder()
+                .disableAll()
+                .navigatorHardwareConcurrency(true)
+                .build()
+        ))
+        stealthPage.screenshot()
+        assertEquals(4, stealthPage.navigatorHardwareConcurrency())
     }
 }

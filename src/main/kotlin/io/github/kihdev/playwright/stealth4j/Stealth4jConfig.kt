@@ -169,7 +169,7 @@ class Stealth4jConfig private constructor(
             if (navigatorHardwareConcurrency) {
                 configuredEvasions += Evasion(
                     JsScript.NAVIGATOR_HARDWARE_CONCURRENCY,
-                    mapOf("navigator_hardware_concurrency" to navigatorHardwareConcurrencyNumber))
+                    mapOf("navigator" to mapOf("hardwareConcurrency" to navigatorHardwareConcurrencyNumber)))
             }
             if (navigatorLanguages) {
                 configuredEvasions += Evasion(

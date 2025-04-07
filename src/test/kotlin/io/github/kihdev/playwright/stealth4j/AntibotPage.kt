@@ -43,6 +43,9 @@ class AntibotPage (private val name: String, private val page: Page) {
 
     fun iframeContentWindow() = page.evaluate(iframeScript) as Boolean
 
+    fun navigatorHardwareConcurrency() =
+        page.evaluate("""() => { return navigator.hardwareConcurrency }""") as Int
+
     fun screenshot() {
         page.screenshot(
             Page.ScreenshotOptions()
@@ -58,7 +61,8 @@ data class FpCollectInfo(
     val hasChrome: Boolean,
     @Serializable(with = DetailChromeSerializer::class) val detailChrome: DetailChrome,
     val audioCodecs: Map<String, String>,
-    val videoCodecs: Map<String, String>
+    val videoCodecs: Map<String, String>,
+    val navigatorPrototype: List<String>
 )
 
 @Serializable
