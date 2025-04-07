@@ -62,7 +62,8 @@ data class FpCollectInfo(
     @Serializable(with = DetailChromeSerializer::class) val detailChrome: DetailChrome,
     val audioCodecs: Map<String, String>,
     val videoCodecs: Map<String, String>,
-    val navigatorPrototype: List<String>
+    val navigatorPrototype: List<String>,
+    val languages: List<String>
 )
 
 @Serializable

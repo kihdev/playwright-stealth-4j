@@ -174,7 +174,7 @@ class Stealth4jConfig private constructor(
             if (navigatorLanguages) {
                 configuredEvasions += Evasion(
                     JsScript.NAVIGATOR_LANGUAGES,
-                    mapOf("languages" to navigatorLanguagesList))
+                    mapOf("navigator" to mapOf("languages" to navigatorLanguagesList)))
             }
             if (navigatorPermissions) {
                 configuredEvasions += Evasion(JsScript.NAVIGATOR_PERMISSIONS)

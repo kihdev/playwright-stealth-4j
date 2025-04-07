@@ -42,6 +42,7 @@ class EvasionTest {
         assertFalse(page.iframeContentWindow())
         assertTrue(page.info.audioCodecs.values.contains(""))
         assertNotEquals(4, page.navigatorHardwareConcurrency())
+        assertEquals(listOf("en-US"), page.info.languages)
     }
 
     @Test
@@ -129,5 +130,17 @@ class EvasionTest {
         ))
         stealthPage.screenshot()
         assertEquals(4, stealthPage.navigatorHardwareConcurrency())
+    }
+
+    @Test
+    fun navigatorLanguages() {
+        val stealthPage = AntibotPage("navigator.languages", context.newPage().stealth(
+            Stealth4jConfig.builder()
+                .disableAll()
+                .navigatorLanguages(true)
+                .build()
+        ))
+        stealthPage.screenshot()
+        assertEquals(listOf("en-US", "en"), stealthPage.info.languages)
     }
 }
