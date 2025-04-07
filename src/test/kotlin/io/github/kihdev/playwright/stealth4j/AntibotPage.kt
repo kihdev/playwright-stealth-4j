@@ -49,6 +49,9 @@ class AntibotPage (private val name: String, private val page: Page) {
     fun navigatorVendor() =
         page.evaluate("""() => { return navigator.vendor }""") as String
 
+    fun navigatorWebdriver() =
+        page.evaluate("""() => { return navigator.webdriver }""") as Boolean?
+
     fun screenshot() {
         page.screenshot(
             Page.ScreenshotOptions()
