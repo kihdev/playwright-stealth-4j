@@ -56,7 +56,9 @@ class AntibotPage (private val name: String, private val page: Page) {
 @Serializable
 data class FpCollectInfo(
     val hasChrome: Boolean,
-    @Serializable(with = DetailChromeSerializer::class) val detailChrome: DetailChrome
+    @Serializable(with = DetailChromeSerializer::class) val detailChrome: DetailChrome,
+    val audioCodecs: Map<String, String>,
+    val videoCodecs: Map<String, String>
 )
 
 @Serializable

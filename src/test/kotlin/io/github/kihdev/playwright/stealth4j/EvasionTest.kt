@@ -38,6 +38,7 @@ class EvasionTest {
         assertFalse(page.info.hasChrome)
         assertTrue(page.info.detailChrome is DetailChrome.Unknown)
         assertFalse(page.iframeContentWindow())
+        assertTrue(page.info.audioCodecs.values.contains(""))
     }
 
     @Test
@@ -101,5 +102,17 @@ class EvasionTest {
         ))
         stealthPage.screenshot()
         assertTrue(stealthPage.iframeContentWindow())
+    }
+
+    @Test
+    fun mediaCodecs() {
+        val stealthPage = AntibotPage("media.codecs", context.newPage().stealth(
+            Stealth4jConfig.builder()
+                .disableAll()
+                .mediaCodecs(true)
+                .build()
+        ))
+        stealthPage.screenshot()
+        assertFalse(stealthPage.info.audioCodecs.values.contains(""))
     }
 }
