@@ -43,6 +43,7 @@ class EvasionTest {
         assertTrue(page.info.audioCodecs.values.contains(""))
         assertNotEquals(4, page.navigatorHardwareConcurrency())
         assertEquals(listOf("en-US"), page.info.languages)
+        assertEquals("denied", page.info.permissions["permission"])
     }
 
     @Test
@@ -142,5 +143,17 @@ class EvasionTest {
         ))
         stealthPage.screenshot()
         assertEquals(listOf("en-US", "en"), stealthPage.info.languages)
+    }
+
+    @Test
+    fun navigatorPermissions() {
+        val stealthPage = AntibotPage("navigator.permissions", context.newPage().stealth(
+            Stealth4jConfig.builder()
+                .disableAll()
+                .navigatorPermissions(true)
+                .build()
+        ))
+        stealthPage.screenshot()
+        assertEquals("default", stealthPage.info.permissions["permission"])
     }
 }

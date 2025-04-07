@@ -63,7 +63,8 @@ data class FpCollectInfo(
     val audioCodecs: Map<String, String>,
     val videoCodecs: Map<String, String>,
     val navigatorPrototype: List<String>,
-    val languages: List<String>
+    val languages: List<String>,
+    val permissions: Map<String, String>
 )
 
 @Serializable
