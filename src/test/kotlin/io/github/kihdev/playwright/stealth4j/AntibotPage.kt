@@ -46,6 +46,9 @@ class AntibotPage (private val name: String, private val page: Page) {
     fun navigatorHardwareConcurrency() =
         page.evaluate("""() => { return navigator.hardwareConcurrency }""") as Int
 
+    fun navigatorVendor() =
+        page.evaluate("""() => { return navigator.vendor }""") as String
+
     fun screenshot() {
         page.screenshot(
             Page.ScreenshotOptions()
