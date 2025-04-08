@@ -47,6 +47,7 @@ class Stealth4jTest {
         assertEquals("denied", page.info.permissions["permission"])
         assertTrue(page.info.plugins.isEmpty())
         assertTrue(page.navigatorWebdriver() == true)
+        assertNotEquals(listOf("Intel Inc.", "Intel Iris OpenGL Engine"), page.info.videoCard)
     }
 
     @Test
@@ -67,6 +68,7 @@ class Stealth4jTest {
         assertEquals("default", stealthPage.info.permissions["permission"])
         assertTrue(stealthPage.info.plugins.isNotEmpty())
         assertNull(stealthPage.navigatorWebdriver())
+        assertEquals(listOf("Intel Inc.", "Intel Iris OpenGL Engine"), stealthPage.info.videoCard)
     }
 
     @Test
@@ -214,5 +216,17 @@ class Stealth4jTest {
         ))
         stealthPage.screenshot()
         assertNull(stealthPage.navigatorWebdriver())
+    }
+
+    @Test
+    fun webglVendor() {
+        val stealthPage = AntibotPage("webgl.vendor", context.newPage().stealth(
+            Stealth4jConfig.builder()
+                .disableAll()
+                .webglVendor(true, "ACME Inc.")
+                .build()
+        ))
+        stealthPage.screenshot()
+        assertEquals("ACME Inc.", stealthPage.info.videoCard[0])
     }
 }

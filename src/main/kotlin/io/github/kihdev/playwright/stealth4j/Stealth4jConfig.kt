@@ -213,8 +213,10 @@ class Stealth4jConfig private constructor(
                 configuredEvasions += Evasion(
                     JsScript.WEBGL_VENDOR,
                     mapOf(
-                        "webgl_vendor" to webglVendorString,
-                        "webgl_renderer" to webglRenderer
+                        "webgl" to mapOf(
+                            "vendor" to webglVendorString,
+                            "renderer" to webglRenderer
+                        )
                     )
                 )
             }

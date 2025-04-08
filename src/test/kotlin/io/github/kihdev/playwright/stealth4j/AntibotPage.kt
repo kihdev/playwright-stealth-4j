@@ -71,7 +71,8 @@ data class FpCollectInfo(
     val navigatorPrototype: List<String>,
     val languages: List<String>,
     val permissions: Map<String, String>,
-    val plugins: List<String>
+    val plugins: List<String>,
+    val videoCard: List<String>
 )
 
 @Serializable
