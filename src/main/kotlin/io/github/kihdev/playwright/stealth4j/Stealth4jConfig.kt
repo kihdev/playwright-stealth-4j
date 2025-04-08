@@ -29,7 +29,22 @@ class Stealth4jConfig private constructor(
         @JvmStatic
         fun builder() = Builder()
 
+        @Suppress("UNCHECKED_CAST")
+        fun mergeMaps(a: Map<String, Any?>, b: Map<String, Any?>): Map<String, Any?> {
+            return (a.keys + b.keys).associateWith { key ->
+                val aVal = a[key]
+                val bVal = b[key]
+                when {
+                    aVal is Map<*, *> && bVal is Map<*, *> ->
+                        mergeMaps(aVal as Map<String, Any?>, bVal as Map<String, Any?>)
+                    bVal != null -> bVal
+                    else -> aVal
+                }
+            }
+        }
+
         fun mapToJson(map: Map<String, Any?>): String {
+            @Suppress("UNCHECKED_CAST")
             fun valueToJson(value: Any?): String = when (value) {
                 is String -> "\"$value\""
                 is Number, is Boolean -> value.toString()
@@ -70,7 +85,7 @@ class Stealth4jConfig private constructor(
         private var navigatorUserAgentString: String? = null
 
         private var navigatorVendor: Boolean = true
-        private var navigatorVendorString: String? = null
+        private var navigatorVendorString: String = "Google Inc."
 
         private var navigatorWebDriver: Boolean = true
 
@@ -126,7 +141,7 @@ class Stealth4jConfig private constructor(
             this.navigatorUserAgent = enabled
             this.navigatorUserAgentString = userAgent
         }
-        fun navigatorVendor(enabled: Boolean, vendor: String? = null) = apply {
+        fun navigatorVendor(enabled: Boolean, vendor: String = "Google Inc.") = apply {
             this.navigatorVendor = enabled
             this.navigatorVendorString = vendor
         }
@@ -168,12 +183,12 @@ class Stealth4jConfig private constructor(
             if (navigatorHardwareConcurrency) {
                 configuredEvasions += Evasion(
                     JsScript.NAVIGATOR_HARDWARE_CONCURRENCY,
-                    mapOf("navigator_hardware_concurrency" to navigatorHardwareConcurrencyNumber))
+                    mapOf("navigator" to mapOf("hardwareConcurrency" to navigatorHardwareConcurrencyNumber)))
             }
             if (navigatorLanguages) {
                 configuredEvasions += Evasion(
                     JsScript.NAVIGATOR_LANGUAGES,
-                    mapOf("languages" to navigatorLanguagesList))
+                    mapOf("navigator" to mapOf("languages" to navigatorLanguagesList)))
             }
             if (navigatorPermissions) {
                 configuredEvasions += Evasion(JsScript.NAVIGATOR_PERMISSIONS)
@@ -189,7 +204,7 @@ class Stealth4jConfig private constructor(
             if (navigatorVendor) {
                 configuredEvasions += Evasion(
                     JsScript.NAVIGATOR_VENDOR,
-                    mapOf("navigator_vendor" to navigatorVendorString))
+                    mapOf("navigator" to mapOf("vendor" to navigatorVendorString)))
             }
             if (navigatorWebDriver) {
                 configuredEvasions += Evasion(JsScript.NAVIGATOR_WEBDRIVER)
@@ -198,8 +213,10 @@ class Stealth4jConfig private constructor(
                 configuredEvasions += Evasion(
                     JsScript.WEBGL_VENDOR,
                     mapOf(
-                        "webgl_vendor" to webglVendorString,
-                        "webgl_renderer" to webglRenderer
+                        "webgl" to mapOf(
+                            "vendor" to webglVendorString,
+                            "renderer" to webglRenderer
+                        )
                     )
                 )
             }
@@ -218,8 +235,10 @@ class Stealth4jConfig private constructor(
         val scripts = mutableListOf<Script>()
 
         // build global json opts object
-        val opts = mapToJson(evasions.map { it.opts }
-            .fold(mapOf()) { acc, map -> acc + map })
+        val opts = mapToJson(
+            evasions.map { it.opts }
+                .fold(emptyMap()) { acc, map -> mergeMaps(acc, map) }
+        )
         scripts += ContentScript("const opts = $opts;")
         // add utils script
         scripts += JsScript.UTILS

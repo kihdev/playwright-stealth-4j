@@ -4,6 +4,7 @@ import com.vanniktech.maven.publish.JavadocJar
 
 plugins {
     kotlin("jvm") version "2.1.20"
+    kotlin("plugin.serialization") version "2.1.20"
     id("com.vanniktech.maven.publish") version "0.31.0"
     id("signing")
 }
@@ -35,6 +36,7 @@ dependencies {
     testImplementation("com.microsoft.playwright:playwright:$playwrightVersion")
     testImplementation(kotlin("test"))
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.8.0")
 }
 
 tasks.test {
