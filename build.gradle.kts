@@ -10,9 +10,9 @@ plugins {
 }
 
 group = "io.github.kihdev"
-version = "1.1.2-SNAPSHOT"
+version = "1.1.2"
 
-val playwrightVersion = "1.51.0"
+val playwrightVersion = "1.53.0"
 object Meta {
     const val NAME = "playwright-stealth-4j"
     const val DESC = "A Kotlin-based library to enhance Playwright's stealth capabilities for Java, Kotlin, and Groovy."
@@ -21,8 +21,8 @@ object Meta {
 }
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_21
-    targetCompatibility = JavaVersion.VERSION_21
+    sourceCompatibility = JavaVersion.VERSION_1_8
+    targetCompatibility = JavaVersion.VERSION_1_8
 }
 
 repositories {
@@ -43,7 +43,7 @@ tasks.test {
     useJUnitPlatform()
 }
 kotlin {
-    jvmToolchain(21)
+    jvmToolchain(8)
 }
 
 mavenPublishing {
