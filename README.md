@@ -24,7 +24,7 @@ Add the dependency to your `build.gradle.kts`:
 
 ```kotlin
 dependencies {
-    implementation("io.github.kihdev:playwright-stealth-4j:1.1.1")
+    implementation("io.github.kihdev:playwright-stealth-4j:1.1.2")
 }
 ```
 
@@ -34,7 +34,7 @@ or to your `pom.xml`:
 <dependency>
     <groupId>io.github.kihdev</groupId>
     <artifactId>playwright-stealth-4j</artifactId>
-    <version>1.1.1</version>
+    <version>1.1.2</version>
 </dependency>
 ```
 
