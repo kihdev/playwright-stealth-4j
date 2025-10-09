@@ -5,7 +5,7 @@ import com.vanniktech.maven.publish.JavadocJar
 plugins {
     kotlin("jvm") version "2.1.20"
     kotlin("plugin.serialization") version "2.1.20"
-    id("com.vanniktech.maven.publish") version "0.31.0"
+    id("com.vanniktech.maven.publish") version "0.34.0"
     id("signing")
 }
 
