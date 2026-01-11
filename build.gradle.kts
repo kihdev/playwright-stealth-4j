@@ -3,7 +3,7 @@ import com.vanniktech.maven.publish.JavaLibrary
 import com.vanniktech.maven.publish.JavadocJar
 
 plugins {
-    kotlin("jvm") version "2.2.21"
+    kotlin("jvm") version "2.3.0"
     kotlin("plugin.serialization") version "2.3.0"
     id("com.vanniktech.maven.publish") version "0.35.0"
     id("signing")
@@ -12,7 +12,7 @@ plugins {
 group = "io.github.kihdev"
 version = "1.1.3-SNAPSHOT"
 
-val playwrightVersion = "1.56.0"
+val playwrightVersion = "1.57.0"
 object Meta {
     const val NAME = "playwright-stealth-4j"
     const val DESC = "A Kotlin-based library to enhance Playwright's stealth capabilities for Java, Kotlin, and Groovy."
