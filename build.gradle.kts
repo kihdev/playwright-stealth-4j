@@ -2,8 +2,8 @@ import com.vanniktech.maven.publish.JavaLibrary
 import com.vanniktech.maven.publish.JavadocJar
 
 plugins {
-    kotlin("jvm") version "2.3.10"
-    kotlin("plugin.serialization") version "2.3.0"
+    kotlin("jvm") version "2.3.21"
+    kotlin("plugin.serialization") version "2.3.21"
     id("com.vanniktech.maven.publish") version "0.36.0"
     id("signing")
 }
@@ -11,7 +11,7 @@ plugins {
 group = "io.github.kihdev"
 version = "1.1.3-SNAPSHOT"
 
-val playwrightVersion = "1.58.0"
+val playwrightVersion = "1.60.0"
 object Meta {
     const val NAME = "playwright-stealth-4j"
     const val DESC = "A Kotlin-based library to enhance Playwright's stealth capabilities for Java, Kotlin, and Groovy."
@@ -35,7 +35,7 @@ dependencies {
     testImplementation("com.microsoft.playwright:playwright:$playwrightVersion")
     testImplementation(kotlin("test"))
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
-    testImplementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.10.0")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.11.0")
 }
 
 tasks.test {
