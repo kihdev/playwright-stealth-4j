@@ -1,5 +1,6 @@
 import com.vanniktech.maven.publish.JavaLibrary
 import com.vanniktech.maven.publish.JavadocJar
+import com.vanniktech.maven.publish.SourcesJar
 
 plugins {
     kotlin("jvm") version "2.3.21"
@@ -9,13 +10,12 @@ plugins {
 }
 
 group = "io.github.kihdev"
-version = "1.1.3"
+version = "1.1.4-SNAPSHOT"
 
 val playwrightVersion = "1.60.0"
 object Meta {
     const val NAME = "playwright-stealth-4j"
     const val DESC = "A Kotlin-based library to enhance Playwright's stealth capabilities for Java, Kotlin, and Groovy."
-    const val LICENSE = "MIT"
     const val GITHUB_REPO = "kihdev/playwright-stealth-4j"
 }
 
@@ -48,7 +48,7 @@ kotlin {
 mavenPublishing {
     configure(JavaLibrary(
         javadocJar = JavadocJar.Javadoc(),
-        sourcesJar = true,
+        sourcesJar = SourcesJar.Sources(),
     ))
 
     publishToMavenCentral(automaticRelease = true)
