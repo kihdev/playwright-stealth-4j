@@ -12,7 +12,7 @@ plugins {
 group = "io.github.kihdev"
 version = "1.1.4-SNAPSHOT"
 
-val playwrightVersion = "1.61.0"
+val playwrightVersion = "1.62.0"
 object Meta {
     const val NAME = "playwright-stealth-4j"
     const val DESC = "A Kotlin-based library to enhance Playwright's stealth capabilities for Java, Kotlin, and Groovy."
