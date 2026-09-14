@@ -4,7 +4,7 @@ import com.vanniktech.maven.publish.SourcesJar
 
 plugins {
     kotlin("jvm") version "2.4.20"
-    kotlin("plugin.serialization") version "2.4.10"
+    kotlin("plugin.serialization") version "2.4.20"
     id("com.vanniktech.maven.publish") version "0.37.0"
     id("signing")
 }
