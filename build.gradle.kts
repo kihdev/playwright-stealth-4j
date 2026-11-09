@@ -35,7 +35,7 @@ dependencies {
     testImplementation("com.microsoft.playwright:playwright:$playwrightVersion")
     testImplementation(kotlin("test"))
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit5")
-    testImplementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.11.0")
+    testImplementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.12.0")
 }
 
 tasks.test {
